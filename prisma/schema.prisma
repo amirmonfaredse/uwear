@@ -4,17 +4,48 @@ datasource db{
 }
 generator client {
   provider = "prisma-client-js"
-  output ="./generated"
+  output ="../app/generated/prisma"
+}
+
+
+model UserAdmin {
+  id String @id @default(nanoid())
+  userName String? @unique
+  email String @unique
+  firstName String?
+  lastName String?
+  phoneNumber String? 
+  avatarUrl String?
+  isActive Boolean
+  createAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  lastLogin DateTime?
+  emailVerified Boolean @default(true)
 }
 model User {
-  id Int @id @default(autoincrement())
-  name String
+  id String @id @default(nanoid())
+  userName String @unique
   email String @unique
+  password String 
+  firstName String?
+  lastName String?
+  phoneNumber String @unique
+  phoneNumberVerified Boolean @default(false)
+  createAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+lastLogin DateTime?
 }
+
 model Product{
-  id Int @id @default(autoincrement())
+  id     String    @id @default(nanoid())
   name String
-  price Int
+  slug String? @unique 
+  description String?
+  content Json?
+  price Int?
+  discount Int? @default(0)
+  stock Int @default(0)
+  isAvailable    Boolean @default(true)
   createAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
